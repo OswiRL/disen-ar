@@ -90,10 +90,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-/* =========================
-   NAVBAR SCROLL HIDE / SHOW
-========================= */
-
 let lastScrollY = window.pageYOffset;
 const SCROLL_OFFSET = 10;
 
@@ -140,3 +136,30 @@ document.querySelectorAll('.nav-link').forEach(link => {
         }
     });
 });
+
+/* =========================
+   HERO PARALLAX EFFECT
+========================= */
+
+let heroContents = document.querySelectorAll('.hero-content');
+let heroSection = document.querySelector('.hero');
+
+function updateParallax() {
+    if (!heroContent || !heroSection) return;
+
+    const scrolled = window.pageYOffset;
+    const heroHeight = heroSection.offsetHeight;
+
+    // Solo aplicar el efecto mientras el hero esté visible
+    if (scrolled < heroHeight) {
+        // Movimiento leve hacia abajo (0.15 es el factor de velocidad)
+        const translateY = scrolled * 0.15;
+        heroContent.style.transform = `translateY(${translateY}px)`;
+    }
+}
+
+// Escuchar el evento scroll
+window.addEventListener('scroll', updateParallax);
+
+// Inicializar
+updateParallax();
