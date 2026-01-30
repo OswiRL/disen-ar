@@ -1,0 +1,146 @@
+// Component Loader for Navbar and Footer
+class ComponentLoader {
+    constructor() {
+        // Load components CSS
+        this.loadComponentsCSS();
+
+        this.navbarHTML = `
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">Diseñ-ar</div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">Nosotros</a></li>
+                    <li><a href="services.html" class="nav-link">Servicios</a></li>
+                    <li><a href="contact.html" class="nav-link btn-contact">Contáctanos</a></li>
+                </ul>
+            </div>
+        </nav>
+        `;
+
+        this.footerHTML = `
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-left">
+                        <div class="footer-logo">
+                            <img
+                                src="./assets/disenar-logo.png"
+                                alt="DISEÑ-AR Logo"
+                                style="width: 160px; height: auto;"
+                            >
+                        </div>
+
+                        <p class="footer-tagline">Design Your Vibe, Create with Passion.</p>
+
+                        <div class="footer-contact">
+                            <h4>Contact</h4>
+                            <p class="contact-label">Email</p>
+                            <a href="mailto:info@disenar.com" class="contact-email">info@disenar.com</a>
+
+                            <p class="contact-label office-label">Our Office</p>
+                            <p class="contact-address">Av. Principal 123, Oficina 456<br>La Paz, Bolivia</p>
+                        </div>
+                    </div>
+
+                    <div class="footer-right">
+                        <div class="footer-links">
+                            <div class="footer-column">
+                                <h4>Pages</h4>
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="about.html">About</a></li>
+                                    <li><a href="services.html">Services</a></li>
+                                    <li><a href="#projects">Projects</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="footer-column">
+                                <h4>Services</h4>
+                                <ul>
+                                    <li><a href="#design">Shrink Sleeves</a></li>
+                                    <li><a href="#production">Label Design</a></li>
+                                    <li><a href="#consulting">Brand Strategy</a></li>
+                                    <li><a href="#support">Printing Services</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="footer-column">
+                                <h4>Resources</h4>
+                                <ul>
+                                    <li><a href="#portfolio">Portfolio</a></li>
+                                    <li><a href="#blog">Blog</a></li>
+                                    <li><a href="#faq">FAQ</a></li>
+                                    <li><a href="#support">Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="footer-bottom">
+                            <p>© Copyright 2025 | Design & Developed By DISEÑ-AR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-big-text">DISEÑ-AR</div>
+        </footer>
+        `;
+    }
+
+    loadNavbar() {
+        const navbarPlaceholder = document.getElementById('navbar-placeholder');
+        if (navbarPlaceholder) {
+            navbarPlaceholder.innerHTML = this.navbarHTML;
+            this.initializeNavbar();
+            document.dispatchEvent(new Event('navbar:loaded'));
+        }
+    }
+
+    loadFooter() {
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (footerPlaceholder) {
+            footerPlaceholder.innerHTML = this.footerHTML;
+        }
+    }
+
+    initializeNavbar() {
+        // Active link highlighting
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    loadComponentsCSS() {
+        // Check if components.css is already loaded
+        const existingLink = document.querySelector('link[href="components.css"]');
+        if (!existingLink) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'components.css';
+            document.head.appendChild(link);
+        }
+    }
+
+    loadAll() {
+        this.loadNavbar();
+        this.loadFooter();
+    }
+}
+
+// Auto-initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const loader = new ComponentLoader();
+    loader.loadAll();
+});
