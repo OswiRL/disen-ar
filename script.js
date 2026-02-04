@@ -6,15 +6,25 @@ let currentSlide = 0;
 const slides = document.querySelectorAll('.hero-slide');
 const indicators = document.querySelectorAll('.indicator');
 const slideInterval = 5000;
+let autoSlide = null;
 
 function showSlide(index) {
+    if (!slides.length) return;
+
     slides.forEach(slide => slide.classList.remove('active'));
     indicators.forEach(indicator => indicator.classList.remove('active'));
 
-    slides[index].classList.add('active');
-    indicators[index].classList.add('active');
+    const slide = slides[index];
+    const indicator = indicators[index];
 
-    const content = slides[index].querySelector('.hero-content');
+    if (slide) {
+        slide.classList.add('active');
+    }
+    if (indicator) {
+        indicator.classList.add('active');
+    }
+
+    const content = slide ? slide.querySelector('.hero-content') : null;
     if (content) {
         content.style.animation = 'none';
         setTimeout(() => {
@@ -24,18 +34,24 @@ function showSlide(index) {
 }
 
 function nextSlide() {
+    if (!slides.length) return;
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
 }
 
 function goToSlide(index) {
+    if (!slides.length) return;
     currentSlide = index;
     showSlide(currentSlide);
-    clearInterval(autoSlide);
-    autoSlide = setInterval(nextSlide, slideInterval);
+    if (autoSlide) {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextSlide, slideInterval);
+    }
 }
 
-let autoSlide = setInterval(nextSlide, slideInterval);
+if (slides.length > 1) {
+    autoSlide = setInterval(nextSlide, slideInterval);
+}
 
 indicators.forEach((indicator, index) => {
     indicator.addEventListener('click', () => goToSlide(index));
@@ -43,7 +59,7 @@ indicators.forEach((indicator, index) => {
 
 /* Pause carousel on hover */
 const hero = document.querySelector('.hero');
-if (hero) {
+if (hero && slides.length > 1) {
     hero.addEventListener('mouseenter', () => clearInterval(autoSlide));
     hero.addEventListener('mouseleave', () => {
         autoSlide = setInterval(nextSlide, slideInterval);

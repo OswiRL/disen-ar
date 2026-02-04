@@ -33,6 +33,8 @@ class ComponentLoader {
                                 src="./assets/disenar-logo.png"
                                 alt="DISEÑ-AR Logo"
                                 style="width: 160px; height: auto;"
+                                loading="lazy"
+                                decoding="async"
                             >
                         </div>
 
