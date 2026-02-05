@@ -13,8 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
             
-            // Ignore anchors, external links, or hash links on same page
-            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank') {
+            // Ignore anchors, external links, or mixed links to same page
+            const currentUrl = new URL(window.location.href);
+            const targetUrl = new URL(link.href, window.location.href);
+
+            if (!href || 
+                href.startsWith('#') || 
+                href.startsWith('mailto:') || 
+                href.startsWith('tel:') || 
+                link.target === '_blank' ||
+                (targetUrl.pathname === currentUrl.pathname && targetUrl.search === currentUrl.search)) {
                 return;
             }
 

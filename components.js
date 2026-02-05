@@ -53,33 +53,26 @@ class ComponentLoader {
                     <div class="footer-right">
                         <div class="footer-links">
                             <div class="footer-column">
-                                <h4>Pages</h4>
+                                <h4>Páginas</h4>
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="services.html">Services</a></li>
-                                    <li><a href="#projects">Projects</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="about.html">Nosotros</a></li>
+                                    <li><a href="services.html">Servicios</a></li>
                                 </ul>
                             </div>
 
                             <div class="footer-column">
-                                <h4>Services</h4>
+                                <h4>Servicios</h4>
                                 <ul>
-                                    <li><a href="#design">Shrink Sleeves</a></li>
-                                    <li><a href="#production">Label Design</a></li>
-                                    <li><a href="#consulting">Brand Strategy</a></li>
-                                    <li><a href="#support">Printing Services</a></li>
+                                    <li><a href="services.html">Nuestros Servicios</a></li>
+                                    <li><a href="services.html#materiales">Materiales</a></li>
                                 </ul>
                             </div>
 
                             <div class="footer-column">
-                                <h4>Resources</h4>
+                                <h4>Cotizaciones</h4>
                                 <ul>
-                                    <li><a href="#portfolio">Portfolio</a></li>
-                                    <li><a href="#blog">Blog</a></li>
-                                    <li><a href="#faq">FAQ</a></li>
-                                    <li><a href="#support">Support</a></li>
+                                    <li><a href="contact.html">Contáctanos</a></li>
                                 </ul>
                             </div>
                         </div>
