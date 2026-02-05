@@ -139,3 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = new ComponentLoader();
     loader.loadAll();
 });
+
+/* =========================
+   GLOBAL FAVICON
+========================= */
+(function() {
+    const link = document.createElement('link');
+    link.type = 'image/svg+xml';
+    link.rel = 'icon';
+    link.href = './assets/favicon.svg';
+    document.head.appendChild(link);
+})();
