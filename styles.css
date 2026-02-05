@@ -58,7 +58,15 @@ body {
     overflow-x: hidden;
 }
 
+/* Page Transition: Exclude navbar */
+body > *:not(#navbar-placeholder):not(script):not(style) {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
 
+body.page-loaded > *:not(#navbar-placeholder):not(script):not(style) {
+    opacity: 1;
+}
 /* Hero Section */
 .hero {
     position: relative;
@@ -89,6 +97,8 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    will-change: transform; /* Optimizacion */
 }
 
 .hero-background::after {
@@ -139,7 +149,8 @@ body {
 .hero-content {
     max-width: 600px;
     color: white;
-    animation: slideUp 0.8s ease-out;
+    /* animation: slideUp 0.8s ease-out; Removed to prevent conflict with parallax */
+    opacity: 1; /* Ensure visible since animation is removed */
 }
 
 @keyframes slideUp {
@@ -850,10 +861,10 @@ body {
 .stacked-wrapper {
     max-width: 1300px;
     margin: 0 auto;
-    padding: 0 60px;
+    padding: 0 clamp(24px, 5vw, 60px);
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 120px;
+    grid-template-columns: minmax(220px, 280px) 1fr;
+    gap: clamp(40px, 8vw, 120px);
     align-items: start;
     padding-top: 20px;
 }
@@ -867,7 +878,7 @@ body {
 }
 
 .section-main-title {
-    font-size: 52px;
+    font-size: clamp(32px, 4.5vw, 52px);
     font-weight: 900;
     line-height: 1.1;
     color: #ffffff;
@@ -882,9 +893,9 @@ body {
 .stack-card {
     position: sticky;
     top: 120px;
-    height: 320px;
+    height: clamp(260px, 30vw, 320px);
     border-radius: 20px;
-    padding: 35px;
+    padding: clamp(24px, 3vw, 35px);
     margin-bottom: 25px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
@@ -921,7 +932,7 @@ body {
 
 .card-label {
     display: inline-block;
-    font-size: 11px;
+    font-size: clamp(10px, 1.2vw, 11px);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -934,7 +945,7 @@ body {
 }
 
 .card-title {
-    font-size: 36px;
+    font-size: clamp(24px, 3.2vw, 36px);
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 12px;
@@ -942,10 +953,44 @@ body {
 }
 
 .card-description {
-    font-size: 15px;
+    font-size: clamp(14px, 1.6vw, 15px);
     line-height: 1.5;
     opacity: 0.95;
     max-width: 450px;
+}
+
+@media (max-width: 900px) {
+    .stacked-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 clamp(20px, 6vw, 40px);
+    }
+
+    .section-title-sticky {
+        position: relative;
+        top: 0;
+        transform: none;
+        text-align: center;
+        padding-top: 0;
+    }
+
+    .stacked-container {
+        max-width: 100%;
+    }
+
+    .stack-card {
+        position: relative;
+        top: auto;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .stack-card:nth-child(1),
+    .stack-card:nth-child(2),
+    .stack-card:nth-child(3),
+    .stack-card:nth-child(4) {
+        top: auto;
+    }
 }
 
 
@@ -1122,26 +1167,26 @@ body {
     }
 
     .section-main-title {
-        font-size: 48px;
+        font-size: 40px;
     }
 
     .stack-card {
-        height: 400px;
-        padding: 40px 30px;
-        top: 100px !important;
+        height: auto;
+        padding: 28px 22px;
+        top: auto !important;
         margin-bottom: 30px;
     }
 
     .card-title {
-        font-size: 36px;
+        font-size: 28px;
     }
 
     .card-description {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .card-label {
-        font-size: 12px;
+        font-size: 11px;
     }
 }
 
@@ -1397,7 +1442,7 @@ body {
     font-size: 10rem;
     font-weight: 850;
     color: #2c3e50;
-    z-index: 1;
+    z-index: 0;
     letter-spacing: -3px;
     line-height: 1;
     text-align: center;
@@ -1605,12 +1650,17 @@ body {
     background: #f8fafc;
 }
 
+
 .mission-about .flip-card-front {
-    background: linear-gradient(135deg, #2996f5 0%, #03d1dc 100%);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 2px, transparent 2px), linear-gradient(135deg, #2996f5 0%, #03d1dc 100%);
+    background-size: 20px 20px, 100% 100%;
+    background-position: 0 0, 0 0;
 }
 
 .vision-about .flip-card-front {
-    background: linear-gradient(135deg, #fa709a 0%, #fbd026 100%);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 2px, transparent 2px), linear-gradient(135deg, #fa709a 0%, #fbd026 100%);
+    background-size: 20px 20px, 100% 100%;
+    background-position: 0 0, 0 0;
 }
 
 .flip-card-back {
@@ -1618,11 +1668,15 @@ body {
 }
 
 .mission-about .flip-card-back {
-    background: linear-gradient(135deg, #2996f5 0%, #03d1dc 100%);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 2px, transparent 2px), linear-gradient(135deg, #2996f5 0%, #03d1dc 100%);
+    background-size: 20px 20px, 100% 100%;
+    background-position: 0 0, 0 0;
 }
 
 .vision-about .flip-card-back {
-    background: linear-gradient(135deg, #fa709a 0%, #fbd026 100%);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 2px, transparent 2px), linear-gradient(135deg, #fa709a 0%, #fbd026 100%);
+    background-size: 20px 20px, 100% 100%;
+    background-position: 0 0, 0 0;
 }
 
 .flip-card h3 {
@@ -1859,6 +1913,11 @@ body {
     .service-item {
         flex-direction: column;
         gap: 20px;
+        cursor: pointer;
+    }
+
+    .service-item:hover {
+        padding: 40px 0;
     }
 
     .service-title {
@@ -1874,7 +1933,22 @@ body {
         height: 200px;
     }
 
+    .service-item:hover .service-info,
     .service-item:hover .service-coll-wrap {
+        max-height: 0;
+        opacity: 0;
+        margin-top: 0;
+    }
+
+    .service-item.is-open .service-info {
+        max-height: 300px;
+        opacity: 1;
+        margin-top: 20px;
+    }
+
+    .service-item.is-open .service-coll-wrap {
+        max-height: 400px;
+        opacity: 1;
         flex-direction: column;
     }
 }
@@ -2094,3 +2168,49 @@ body {
         font-size: 20px;
     }
 }
+
+/* Page Transitions & Scroll Animations */
+body.page-loaded {
+    opacity: 1;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px); /* Slightly less distance for faster feel */
+    transition: all 0.4s ease-out; /* Faster and snappier */
+    will-change: opacity, transform;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-100 { transition-delay: 0.1s; }
+.reveal-delay-200 { transition-delay: 0.2s; }
+.reveal-delay-300 { transition-delay: 0.3s; }
+
+/* Override reveal animation for always-visible elements */
+/* Override reveal animation for always-visible elements */
+.scrolling-values.reveal,
+.values-text.reveal {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.years-text.reveal {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+/* Scrolling text needs to keep its animation */
+.scrolling-text.reveal {
+    opacity: 1 !important;
+}
+
+
+

@@ -6,7 +6,20 @@ let currentSlide = 0;
 const slides = document.querySelectorAll('.hero-slide');
 const indicators = document.querySelectorAll('.indicator');
 const slideInterval = 5000;
-let autoSlide = null;
+let autoSlideInterval = null;
+let isHovering = false;
+
+function startAutoSlide() {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(nextSlide, slideInterval);
+}
+
+function stopAutoSlide() {
+    if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
+    }
+}
 
 function showSlide(index) {
     if (!slides.length) return;
@@ -23,14 +36,6 @@ function showSlide(index) {
     if (indicator) {
         indicator.classList.add('active');
     }
-
-    const content = slide ? slide.querySelector('.hero-content') : null;
-    if (content) {
-        content.style.animation = 'none';
-        setTimeout(() => {
-            content.style.animation = 'slideUp 0.8s ease-out';
-        }, 10);
-    }
 }
 
 function nextSlide() {
@@ -43,14 +48,17 @@ function goToSlide(index) {
     if (!slides.length) return;
     currentSlide = index;
     showSlide(currentSlide);
-    if (autoSlide) {
-        clearInterval(autoSlide);
-        autoSlide = setInterval(nextSlide, slideInterval);
+    
+    // Reset timer on manual interaction
+    stopAutoSlide();
+    if (!isHovering) {
+        startAutoSlide();
     }
 }
 
+// Initialize
 if (slides.length > 1) {
-    autoSlide = setInterval(nextSlide, slideInterval);
+    startAutoSlide();
 }
 
 indicators.forEach((indicator, index) => {
@@ -60,9 +68,13 @@ indicators.forEach((indicator, index) => {
 /* Pause carousel on hover */
 const hero = document.querySelector('.hero');
 if (hero && slides.length > 1) {
-    hero.addEventListener('mouseenter', () => clearInterval(autoSlide));
+    hero.addEventListener('mouseenter', () => {
+        isHovering = true;
+        stopAutoSlide();
+    });
     hero.addEventListener('mouseleave', () => {
-        autoSlide = setInterval(nextSlide, slideInterval);
+        isHovering = false;
+        startAutoSlide();
     });
 }
 
@@ -158,17 +170,15 @@ document.addEventListener('click', (e) => {
 /* =========================
    SMOOTH SCROLL
 ========================= */
-// Bound after navbar is injected
-
 /* =========================
    HERO PARALLAX EFFECT
 ========================= */
 
-let heroContent = document.querySelector('.hero-content'); // Fixed: singular
+const allHeroContents = document.querySelectorAll('.hero-content'); // Select all
 let heroSection = document.querySelector('.hero');
 
 function updateParallax() {
-    if (!heroContent || !heroSection) return;
+    if (!allHeroContents.length || !heroSection) return;
 
     const scrolled = window.pageYOffset;
     const heroHeight = heroSection.offsetHeight;
@@ -176,7 +186,10 @@ function updateParallax() {
     // Only apply effect while hero is visible
     if (scrolled < heroHeight) {
         const translateY = scrolled * 0.15;
-        heroContent.style.transform = `translateY(${translateY}px)`;
+        // Apply to ALL hero content elements
+        allHeroContents.forEach(content => {
+            content.style.transform = `translateY(${translateY}px)`;
+        });
     }
 }
 
@@ -263,3 +276,39 @@ function playVideo() {
         video.play();
     }
 }
+
+/* =========================
+   SERVICE AREA TOGGLE (MOBILE)
+========================= */
+
+function initializeServiceAreaToggle() {
+    const items = document.querySelectorAll('.service-item');
+    if (!items.length) return;
+
+    const mq = window.matchMedia('(max-width: 768px)');
+
+    items.forEach(item => {
+        if (item.dataset.serviceBound === 'true') {
+            return;
+        }
+        item.dataset.serviceBound = 'true';
+        item.addEventListener('click', () => {
+            if (!mq.matches) {
+                return;
+            }
+            const wasOpen = item.classList.contains('is-open');
+            items.forEach(other => other.classList.remove('is-open'));
+            if (!wasOpen) {
+                item.classList.add('is-open');
+            }
+        });
+    });
+
+    mq.addEventListener('change', () => {
+        if (!mq.matches) {
+            items.forEach(item => item.classList.remove('is-open'));
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initializeServiceAreaToggle);
