@@ -1,0 +1,210 @@
+/* =========================
+   SERVICE AREA TWO STYLES
+   (Artego-inspired layout)
+========================= */
+
+/* CSS Variables for Artego styles */
+:root {
+    --_spacing---spacing--space-120: 120px;
+    --_spacing---spacing--space-40: 40px;
+    --_spacing---spacing--space-24: 24px;
+    --_spacing---radius--radius-16: 16px;
+    --_spacing---radius--radius-32: 32px;
+    --_spacing---radius--radius-full: 9999px;
+    --_typography---h6--font-size: 28px;
+    --_typography---h6--line-height: 1.3;
+    --_typography---h6--font-weight: 700;
+    --_typography---h6--letter-spacing: -0.02em;
+    --_typography---h5--font-size: 48px;
+    --_typography---h5--line-height: 1.2;
+    --_typography---text-size-small--font-size: 16px;
+    --_typography---text-size-small--line-height: 1.6;
+    --_typography---text-size-xs--font-size: 14px;
+    --dark--100: #1a1a1a;
+    --white--300: #f5f5f5;
+    --gray--300: #999;
+    --gray--400: #e5e5e5;
+    --black--100: #000;
+}
+
+.service-area-two {
+    padding-top: var(--_spacing---spacing--space-120);
+    padding-bottom: var(--_spacing---spacing--space-120);
+    background: #fff;
+}
+
+.service-container-artego {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.service-item-two {
+    margin-bottom: var(--_spacing---radius--radius-16);
+    padding: var(--_spacing---spacing--space-40);
+    grid-column-gap: 100px;
+    grid-row-gap: 100px;
+    border-radius: var(--_spacing---radius--radius-32);
+    background-color: var(--white--300);
+    grid-template-rows: auto;
+    grid-template-columns: 0.25fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    display: grid;
+    position: sticky;
+    top: 100px;
+}
+
+.service-number-box {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.service-number {
+    color: var(--gray--300);
+    font-size: var(--_typography---h5--font-size);
+    line-height: var(--_typography---h5--line-height);
+    font-weight: var(--_typography---h6--font-weight);
+}
+
+.service-content-box {
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    flex-flow: column;
+    justify-content: space-between;
+    display: flex;
+}
+
+.service-content-inner {
+    flex: 1;
+}
+
+.heading-six {
+    color: var(--dark--100);
+    font-size: var(--_typography---h6--font-size);
+    line-height: var(--_typography---h6--line-height);
+    font-weight: var(--_typography---h6--font-weight);
+    letter-spacing: var(--_typography---h6--letter-spacing);
+    margin: 0;
+}
+
+.pb-10 {
+    padding-bottom: 10px;
+}
+
+.section-content-sm {
+    font-size: var(--_typography---text-size-small--font-size);
+    line-height: var(--_typography---text-size-small--line-height);
+    color: #666;
+    margin: 0;
+}
+
+.service-list {
+    grid-column-gap: 12px;
+    grid-row-gap: 12px;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.service-list-item {
+    display: inline-block;
+}
+
+.service-list-text {
+    border-radius: var(--_spacing---radius--radius-full);
+    background-color: var(--gray--400);
+    color: var(--black--100);
+    padding: 10px 18px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.service-img-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.service-img-two {
+    border-radius: var(--_spacing---radius--radius-32);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .service-item-two {
+        grid-template-columns: 0.25fr 1fr 1fr;
+        grid-column-gap: 60px;
+        grid-row-gap: 60px;
+    }
+}
+
+@media (max-width: 968px) {
+    .service-item-two {
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+        grid-template-columns: 1fr;
+    }
+    
+    .service-number {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-area-two {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+    
+    .service-container-artego {
+        padding: 0 30px;
+    }
+    
+    .service-item-two {
+        padding: var(--_spacing---spacing--space-24);
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+        flex-flow: column;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr;
+        grid-auto-columns: 1fr;
+        width: 100%;
+        display: flex;
+        position: static;
+    }
+    
+    .heading-six {
+        font-size: 24px;
+    }
+    
+    .section-content-sm {
+        text-indent: 0;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 580px) {
+    .service-list {
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+    }
+    
+    .service-list-text {
+        font-size: var(--_typography---text-size-xs--font-size);
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+    
+    .service-area-two {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+}
